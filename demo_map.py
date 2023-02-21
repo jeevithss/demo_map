@@ -5,7 +5,7 @@ import streamlit.components.v1 as components
 import json
 
 def create_map():
-    data = pandas.read_csv("C:\Jeevith\Python\VS\E-globe\Volcanoes.txt")
+    data = pandas.read_csv("Volcanoes.txt")
     lat = list(data["LAT"])
     lon = list(data["LON"])
     elev = list(data["ELEV"])
