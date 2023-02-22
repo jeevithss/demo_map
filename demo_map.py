@@ -29,7 +29,7 @@ def create_map():
 
     map.add_child(feature_group)
     map.save("Map1.html")
-    return map,lat,lon,name
+    return map,lat,lon,name,elev
 
 def read_json():
     f=open("world.json")
@@ -41,6 +41,7 @@ def read_json():
 def gui():
     sl.title("E-GLOBE")
     menu=['Homepage','Login',"Search","Logout"]
+    m,lat,lon,name,elevation =create_map()
     select=sl.sidebar.selectbox("Menu",menu)
     if 'is_logged_in' not in sl.session_state:
         sl.session_state.is_logged_in=False
@@ -57,6 +58,7 @@ def gui():
                     sl.success("Successfully logged in as {}".format(username))
                     sl.session_state.is_logged_in=True
                     sl.session_state.username=username
+                    components.html(m._repr_html_(),width=800,height=600)
                 else:
                     sl.warning("Invalid login credentials")
         else:
@@ -67,11 +69,18 @@ def gui():
             sl.session_state.is_logged_in=False
             sl.session_state.username=None
     elif select=="Search":
-        if sl.session_state.is_logged_in==True:
-                m,lat,lon,name =create_map() 
+        if sl.session_state.is_logged_in==True: 
                 search=sl.selectbox("Search any volcano",name)
                 order=name.index(search)
                 new_map=folium.Map(location=[lat[order],lon[order]],zoom_start=10)
+                def color_producer(elevation):
+                    if elevation<1000:
+                        return "green"
+                    elif 1000<=elevation<3000:
+                        return "orange"
+                    else:
+                        return "red"
+                new_map.add_child(folium.CircleMarker(location = [lat[order],lon[order]], radius = 6, popup = str(elevation[order])+' m', fill_color = color_producer(elevation[order]), color = "black", fill_opacity = 0.7, fill = True))
                 components.html(new_map._repr_html_(),width=800,height=600)
         else:
             sl.warning("You have to login first")
