@@ -2,7 +2,6 @@ import streamlit as sl
 import folium
 import pandas
 import streamlit.components.v1 as components
-import json
 
 def create_map():
     data = pandas.read_csv("Volcanoes.txt")
@@ -30,13 +29,6 @@ def create_map():
     map.add_child(feature_group)
     map.save("Map1.html")
     return map,lat,lon,name,elev
-
-def read_json():
-    f=open("world.json")
-    data=json.load(f)
-    return data
-
-
 
 def gui():
     sl.title("E-GLOBE")
