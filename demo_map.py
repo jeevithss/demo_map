@@ -40,7 +40,7 @@ def gui():
     if select =="Homepage":
         sl.subheader("Welcome to E-globe")
     elif select == "Login":
-        cred={"Admin":"123","Jeevith":"249","Rsa":"214","Mitul":"305"}
+        cred={"Admin":"123","micaudjun":"JAMCS123*","gradient":"123grad","trimaker":"tri234","helllodict":"dicthello","plantaur":"venus2","calamity":"turkey 3","project":"mrsj3","eglobe":"613mit","parylson":"paryl324","ndshance":"chance12","excel":"23excel"}
         sl.subheader("LOGIN PAGE")
         if sl.session_state.is_logged_in==False:
             username=sl.sidebar.text_input("Username")
